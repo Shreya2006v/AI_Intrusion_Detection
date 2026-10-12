@@ -1,0 +1,22 @@
+# Sensitive keys & configs
+.env
+*.env
+
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Local SQLite Database
+*.db
+*.sqlite3
+
+# Node & Frontend
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# Logs and temp files
+test_logs.txt
+temp_*
