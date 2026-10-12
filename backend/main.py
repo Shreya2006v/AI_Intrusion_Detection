@@ -1,3 +1,5 @@
+from fastapi.responses import FileResponse
+from report_generator import create_pdf
 import os
 import shutil
 from datetime import datetime
@@ -96,3 +98,19 @@ async def analyze_log_file(file: UploadFile = File(...)):
         # Clean up temporary uploaded file
         if os.path.exists(temp_file_path):
             os.remove(temp_file_path)
+
+@app.get("/export-report")
+def export_threat_report():
+    """Generates a PDF of all stored threats and returns it as a download."""
+    incidents = get_all_incidents()
+    file_path = "NIDS_Executive_Report.pdf"
+    
+    # Generate the PDF file
+    create_pdf(incidents, filename=file_path)
+    
+    # Return the file to the browser
+    return FileResponse(
+        path=file_path, 
+        filename=file_path, 
+        media_type='application/pdf'
+    )
